@@ -150,10 +150,8 @@
         <table id="routes-table">
             <thead>
                 <tr>
-                    <th>Route ID</th>
-                    <th>Origin</th>
-                    <th>Destination</th>
-                    <th>Operators</th>
+                    <th>Origin ⇄ Destination</th>
+                    <th>Operators & Details</th>
                 </tr>
             </thead>
             <tbody></tbody>
@@ -164,8 +162,12 @@
     <script>
         async function loadData() {
             try {
+                // const jettiesResponse = await fetch('https://stears-flourish-data.s3.amazonaws.com/jetties.json');
+                // const routesResponse = await fetch('https://stears-flourish-data.s3.amazonaws.com/routes.json');
+
                 const jettiesResponse = await fetch('https://api.allorigins.win/raw?url=https://stears-flourish-data.s3.amazonaws.com/jetties.json');
                 const routesResponse = await fetch('https://api.allorigins.win/raw?url=https://stears-flourish-data.s3.amazonaws.com/routes.json');
+
                 if (!jettiesResponse.ok || !routesResponse.ok) {
                     throw new Error("Failed to load data files.");
                 }
@@ -254,18 +256,58 @@
                 const routesTable = document.querySelector("#routes-table tbody");
                 routesData.features.forEach(route => {
                     const { route_id, origin, destination, operator } = route.properties;
-        
+
+                    let operatorHTML = "";
+
+                    if (operator.Public) {
+                        let op = operator.Public;
+                        operatorHTML += `<strong>Lagferry</strong>
+                            <ul>
+                                <li><b>Operating Hours</b>: ${op.operating_hours}. ${op.peak_only}.</li>
+                                <li><b>Frequency</b>: ${op.departure_frequency}. ${op.departure_trigger}.</li>
+                                <li><b>Cost</b>: ${op.cost_to_final_destination}.</li>
+                                <li><b>Payment Options</b>: ${op.payment_options}</li>
+                                <li><b>Departure Frequency</b>: ${op.departure_frequency}</li>
+                                <li><b>Total Duration</b>: ${op.duration_to_final_destination}.</li>
+                                <li><b>Stops on the Route</b>:<ul>
+                                    <li>Stop(s): ${op.stops_along_the_route}</li>
+                                    <li>Duration Breakdown: ${op.duration_between_stops}</li>
+                                    <li>Cost Breakdown: ${op.cost_between_stops}</li></ul>
+                                <li><b>Weekend</b>: ${op.weekend}</li>
+                                <li><b>Additional Notes</b>: ${op.rain}. ${op.other_disruptions}.</li>
+                            </ul>`;
+                    } else {
+                        operatorHTML += "Lagferry does not operate along this route<br><br>";
+                    }
+
+                    if (operator.Private) {
+                        let op = operator.Private;
+                        operatorHTML += `<strong>Private Operator</strong>
+                            <ul>
+                                <li><b>Operating Hours</b>: ${op.operating_hours}. ${op.peak_only}.</li>
+                                <li><b>Frequency</b>: ${op.departure_frequency}. ${op.departure_trigger}.</li>
+                                <li><b>Cost</b>: ${op.cost_to_final_destination}.</li>
+                                <li><b>Payment Options</b>: ${op.payment_options}</li>
+                                <li><b>Departure Frequency</b>: ${op.departure_frequency}</li>
+                                <li><b>Total Duration</b>: ${op.duration_to_final_destination}.</li>
+                                <li><b>Stops on the Route</b>:<ul>
+                                    <li>Stop(s): ${op.stops_along_the_route}</li>
+                                    <li>Duration Breakdown: ${op.duration_between_stops}</li>
+                                    <li>Cost Breakdown: ${op.cost_between_stops}</li></ul>                                <li><b>Weekend</b>: ${op.weekend}</li>
+                                <li><b>Additional Notes</b>: ${op.rain}</li>
+                            </ul>`;
+                    } else {
+                        operatorHTML += "Lagferry is the only operator at this location";
+                    }
+
                     const row = document.createElement("tr");
                     row.innerHTML = `
                         <td id="route_${route_id}">
-                            <b><a href="details.html#route_${route_id}">${origin} → ${destination}</a></b>
-                        </td>
-                        <td>
-                            ${operator}
-                        </td>
-                        <td>
+                            <b><a href="details.html#route_${route_id}">${origin} ⇄<br>${destination}</a></b>
+                            <br><br>
                             <p>🚩 Is something incorrect? <a target="_blank" href=https://forms.clickup.com/37317836/f/13jv6c-26472/60ATY7Y1SD75AZX1D4?Name%20of%20map%20feature=RouteID:${route_id}--${origin.replaceAll(" ","%20")} - ${destination.replaceAll(" ","%20")}>Send feedback</a>.</p>
                         </td>
+                        <td>${operatorHTML}</td>
                     `;
                     
                     routesTable.appendChild(row);
