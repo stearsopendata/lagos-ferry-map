@@ -274,7 +274,7 @@
                             layer.setStyle({ color: "#f05042", weight: 6 })
                             layer.bindPopup(() => {
                                 return `<div class = "popup-hover">
-                                    <h1>⛴️ Route:</h1>
+                                    <h1>⛴️ Route</h1>
                                     <p>${feature.properties.origin} ⇄ <br>${feature.properties.destination}</p>
                                     <p><b><a target="_blank" href="details.html#route_${feature.properties.route_id}">View stops, schedules, & fares</a></b></p>
                                     </div>`;
@@ -290,7 +290,7 @@
                             layer.setStyle({ color: "#f06b42", weight: 6 })
                             layer.bindPopup(() => {
                                 return `<div class = "popup-hover">
-                                    <h1>⛴️ Route:</h1>
+                                    <h1>⛴️ Route</h1>
                                     <p>${feature.properties.origin} ⇄ <br>${feature.properties.destination}</p>
                                     <p><b><a target="_blank" href="details.html#route_${feature.properties.route_id}">View stops, schedules, & fares</a></b></p>
                                     </div>`;
@@ -354,9 +354,9 @@
                     onEachFeature: (feature, layer) => {
                         layer.on('mouseover', function () {
                             layer.bindPopup(`<div class="popup-hover">
-                                <h1>📍 Facility:</h1>
+                                <h1>📍 Facility</h1>
                                 <p>${feature.properties.name}</p>
-                                <p><b><a href="details.html#stop_${feature.properties.ferry_stop_id}">View all destinations and routes</b></p>
+                                <p><b><a target="_blank" href="details.html#stop_${feature.properties.ferry_stop_id}">View all destinations and routes</b></p>
                                 </div>`,
                             { 
                                 autoPan: true, 
@@ -373,9 +373,9 @@
                                 : `<div class="jetty-image-container"><img src="${feature.properties.s3_url}"></div>`;
 
                             layer.bindPopup(`<div class="popup-hover">
-                                <h1>📍 Facility:</h1>
+                                <h1>📍 Facility</h1>
                                 <p>${feature.properties.name}</p>
-                                <p><b><a href="details.html#stop_${feature.properties.ferry_stop_id}">View all destinations and routes</b></p>
+                                <p><b><a target="_blank" href="details.html#stop_${feature.properties.ferry_stop_id}">View all destinations and routes</b></p>
                                 </div>`,
                             { 
                                 autoPan: true, 
