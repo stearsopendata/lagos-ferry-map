@@ -224,8 +224,8 @@
         var routeLayers = [];
 
         async function loadFerryData() {
-            const jettiesURL = "https://stears-flourish-data.s3.amazonaws.com/jetties.json";
-            const routesURL = "https://stears-flourish-data.s3.amazonaws.com/routes.json";
+            const jettiesURL = "https://api.allorigins.win/raw?url=https://stears-flourish-data.s3.amazonaws.com/jetties.json";
+            const routesURL = "https://api.allorigins.win/raw?url=https://stears-flourish-data.s3.amazonaws.com/routes.json";
             
             try {
                 const [jettiesRes, routesRes] = await Promise.all([
