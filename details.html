@@ -285,7 +285,22 @@
             });
         });
 
-        lucide.createIcons(); // Load icons
+        document.addEventListener("DOMContentLoaded", () => {
+            loadData().then(() => {
+                lucide.createIcons();
+
+                // Check if the URL has an anchor and scroll to it
+                if (window.location.hash) {
+                    const targetId = window.location.hash.substring(1);
+                    const targetElement = document.getElementById(targetId);
+                    if (targetElement) {
+                        setTimeout(() => {
+                            targetElement.scrollIntoView({ behavior: "smooth", block: "start" });
+                        }, 500); // Delay ensures the content is fully loaded before scrolling
+                    }
+                }
+            });
+        });
 
     </script>
 </body>
