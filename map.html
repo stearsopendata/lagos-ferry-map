@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lagos Ferry Map: Routes, Schedules, and Fares</title>
+
+    <!-- Meta Description (Max 160 characters, includes keywords naturally) -->
+    <meta name="description" content="Comprehensive interactive map of Lagos ferry jetties, routes, and schedules - captures both Lagferry and privately operated ferry services">
+    <!-- Meta Keywords (Optional, Google ignores this, but some search engines may use it) -->
+    <meta name="keywords" content="Lagos, Nigeria, ferry, public transit, water transportation, road congestion, urban data, urbanization, sustainable development">
+    <!-- Meta Author -->
+    <meta name="author" content="Stears Open Data">
+    <!-- Meta Robots (Controls search engine indexing) -->
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph (Facebook, LinkedIn) -->
+    <meta property="og:title" content="Lagos Ferry Map: Routes, Schedules, and Fares">
+    <meta property="og:description" content="Comprehensive interactive map of Lagos ferry jetties, routes, and schedules - captures both Lagferry and privately operated ferry services">
+    <meta property="og:image" content="https://www.example.com/image.jpg">
+    <meta property="og:url" content="https://www.stears.co/open-data/lagos-ferries/map.html">
+    <meta property="og:type" content="website">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Lagos Ferry Map: Routes, Schedules, and Fares">
+    <meta name="twitter:description" content="Comprehensive interactive map of Lagos ferry jetties, routes, and schedules - captures both Lagferry and privately operated ferry services">
+    <meta name="twitter:image" content="https://www.example.com/image.jpg">
+
+    <!-- Favicon -->
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+    <link rel="canonical" href="https://www.stears.co">
+
+    <!-- Responsive Design -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="styles.css">
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
+    <!-- Google Font: Mulish -->
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-303660820"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-303660820');
+    </script>
+
+    <script type="application/ld+json">
+        {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Lagos Ferry Map: Routes, Schedules, and Fares",
+        "url": "https://www.stears.co/open-data/lagos-ferries/map.html",
+        "logo": "https://cdn.prod.website-files.com/661d31a2986c2e235986f9dd/678a3aad73835b8b2380afc5_Layer_1-p-500.png",
+        "description": "Comprehensive interactive map of Lagos ferry jetties, routes, and schedules - captures both Lagferry and privately operated ferry services"
+        }
+    </script>
+    
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="logo">
+            <a href="https://www.stears.co/open-data/"><img src="https://cdn.prod.website-files.com/661d31a2986c2e235986f9dd/678a3aad73835b8b2380afc5_Layer_1-p-500.png"></a>
+            <div class="nav-title">Lagos Ferry Map</div>
+        </div>
+        <div class="nav-links">
+            <a class="nav-a-current" href="map.html">Map</a>
+            <a href="details.html">Details</a>
+            <a href="https://www.stears.co/open-data/about-us/">About us</a>
+            <a href="https://mailchi.mp/stears.co/open-data"><button class="btn">Stay updated</button></a>
+        </div>
+    </nav>
+
+    <div id="main-element">
+        <div id="loading">Loading map data...</div>
+
+        <div id="search-box">
+            <input type="text" id="search-input" placeholder="Zoom to a location...">
+            <button onclick="searchLocation()">➤</button>
+        </div>
+
+        <div id="map"></div>
+
+        <div id="info-icon"><i data-lucide="info"></i></div>
+
+        <!-- Info Pane (Shown on Desktop) -->
+        <div id="panel">
+            <button class="close-btn" onclick="closePanel()"><i data-lucide="x"></i></button>
+            <h1>About the Lagos Ferry Map</h1>
+            <h2>Our goal</h2>
+            <p>We want to educate Lagos commuters about water transit alternatives, enabling faster, more enjoyable commutes. That's why we deployed a team of data collectors to gather detailed information about the routes, schedules, and fares, creating the first comprehensive map.</p>
+            <p><a href="details.html">Read about the ferries and mapping process.</a></p>
+            <p>Concerned about safety? <a href="details.html#safety">Learn more.</a></p>
+            <h2>Limitations</h2>
+            <p>Private, informal transit operations are always subject to change. This information was collected in <b>February 2025</b>. To stay up-to-date, we have included a user feedback feature where users can submit updates to the data.</p>
+            <p>This map presents the full spectrum of ferry facilities and routes, including some that are quite undeveloped and a better fit for commuters who are more adventurous and don't mind getting shoes muddy.</p>
+        </div>
+
+        <!-- Info Popup (Shown on Mobile) -->
+        <div id="popup">
+            <button class="close-btn" onclick="closePopup()"><i data-lucide="x"></i></button>
+            <h1>About the Lagos Ferry Map</h1>
+            <h2>Our goal</h2>
+            <p>We want to educate Lagos commuters about water transit alternatives, hopefully enabling faster, more enjoyable commutes. That's why we deployed a team of data collection contractors to gather detailed information about the routes, schedules, and fares.</p>
+            <p><a href="">Read about the ferries and mapping process.</a></p>
+            <p>Concerned about safety? <a href="your-link.html">Learn more.</a></p>
+            <h2>Limitations</h2>
+            <p>Private, informal transit operations are always subject to change. This information was collected in <b>February 2025</b>. To stay up-to-date, we have included a user feedback feature where users can submit updates to the data.</p>
+            <p>This map presents the full spectrum of ferry facilities and routes, including some that are quite undeveloped and would be a better fit for commuters who are more adventurous and don't mind getting their shoes muddy.</p>
+        </div>
+
+        <div id="legend">
+            <p><b>Facility Quality</b></p>
+            <div class="legend-item">
+                <span class="legend-color" style="background: black; border: 2px solid black;"></span>
+                Developed
+                <div class="tooltip-container" onclick="toggleTooltip(event)">
+                    <i class="legend-info" data-lucide="info"></i>
+                    <div class="tooltip">These facilities are properly engineered and structurally sound. Some of them have terminal buildings where you can buy tickets and wait indoors.</div>
+                </div>
+            </div>
+            <div class="legend-item">
+                <span class="legend-color" style="background: #801500; border: 2px solid #801500;"></span>
+                Less Developed
+                <div class="tooltip-container" onclick="toggleTooltip(event)">
+                    <i class="legend-info" data-lucide="info"></i>
+                    <div class="tooltip">These are facilities that lack developed structures like formal docks or seawalls. Many of them are landings where the boats pull up on a sand bank.</div>
+                </div>
+            </div>
+            <p><b>Routes</b></p>
+            <div class="legend-item">
+                <span class="legend-color" style="background: transparent; border: 2px solid #498bf7;"></span>
+                Fixed Routes
+                <div class="tooltip-container" onclick="toggleTooltip(event)">
+                    <i class="legend-info" data-lucide="info"></i>
+                    <div class="tooltip">These are recurring public transport routes where you can show up and buy an individual ticket.</div>
+                </div>
+            </div>
+            <div class="legend-item">
+                <span class="legend-color" style="background: transparent; border: 2px dashed #79abfc;"></span>
+                Charter Suggestions
+                <div class="tooltip-container" onclick="toggleTooltip(event)">
+                    <i class="legend-info" data-lucide="info"></i>
+                    <div class="tooltip">Private charters require paying for the entire boat, and they can go to any destination. The suggestions shown with dotted lines demonstrate how charters can be used to navigate between locations that otherwise lack ferry connectivity.</div>
+                </div>
+            </div>
+            <p><br>Concerned about safety?<br><a href="your-link.html">Learn more.</a></p>
+        </div>
+
+    </div>
+   
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+
+    <script>
+        function closePopup() {
+            document.getElementById("popup").style.display = "none";
+            document.getElementById("info-icon").style.display = "block";
+        }
+
+        function closePanel() {
+            document.getElementById("panel").style.display = "none";
+            document.getElementById("info-icon").style.display = "block";
+        }
+        
+        document.getElementById("info-icon").addEventListener("click", function() {
+            document.getElementById("panel").style.display = "block";
+            document.getElementById("info-icon").style.display = "none";
+        });
+
+        var map = L.map('map', { 
+            center: [6.46, 3.45], 
+            zoom: 12,
+            zoomControl: false
+        });
+
+        L.control.zoom({
+            position: 'bottomleft'
+        }).addTo(map);
+
+        // map.on("popupopen", function (e) {
+        //     var popup = e.popup;
+        //     var bounds = map.getBounds();
+        //     var popupLatLng = popup.getLatLng();
+
+        //     if (!bounds.contains(popupLatLng)) {
+        //         popup.setLatLng(bounds.getCenter()); // Moves popup within bounds
+        //     }
+        // });
+
+        var tileLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+            attribution: '&copy; <a href="https://carto.com/">CARTO</a> &copy; OpenStreetMap contributors'
+        });
+        tileLayer.addTo(map);
+
+        function searchLocation() {
+            var query = document.getElementById("search-input").value;
+            if (!query) return;
+            
+            fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${query}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.length > 0) {
+                        var lat = data[0].lat;
+                        var lon = data[0].lon;
+                        map.setView([lat, lon], 14);
+                    } else {
+                        alert("Location not found. Try another search.");
+                    }
+                })
+                .catch(error => console.error("Error searching location:", error));
+        }
+        
+        var ferryJettiesLayer, ferryRoutesLayer;
+        var routeLayers = [];
+
+        async function loadFerryData() {
+            const jettiesURL = "https://stears-flourish-data.s3.amazonaws.com/jetties.json";
+            const routesURL = "https://stears-flourish-data.s3.amazonaws.com/routes.json";
+            
+            try {
+                const [jettiesRes, routesRes] = await Promise.all([
+                    fetch(jettiesURL),
+                    fetch(routesURL)
+                ]);
+
+                const jettiesData = await jettiesRes.json();
+                const routesData = await routesRes.json();
+
+                ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                // ROUTES
+                ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+                ferryRoutesLayer = L.geoJSON(routesData, {
+                    style: feature => {
+                        const operators = feature.properties.operator || {};
+                        const isPrivateOnly = Object.keys(operators).length === 1 && operators.Private;
+                        if (isPrivateOnly) {
+                            const private = operators.Private;
+                            if (private.operational_category == "[Private] On-demand charter") {
+                                return {
+                                    color: "#79abfc",
+                                    weight: 2,
+                                    opacity: 0.8,
+                                    dashArray: "1, 5"
+                                };
+                            };
+                        };
+                        return {
+                            color: "#498bf7",
+                            weight: 2,
+                            opacity: 0.8
+                        };
+                    },
+                    onEachFeature: (feature, layer) => {
+                        routeLayers.push(layer);
+                        // const coordinates = feature.geometry.coordinates;
+                        // // Check if coordinates are valid
+                        // if (!isValidCoordinates(coordinates)) {
+                        //     console.warn('Skipping route with invalid coordinates:', feature);
+                        //     return; // Skip this feature if coordinates are invalid
+                        // }
+                        layer.defaultStyle = { color: layer.options.color, weight: layer.options.weight, opacity: layer.options.opacity};
+                        layer.on('mouseover', function () {
+                            layer.setStyle({ color: "#f05042", weight: 6 })
+                            layer.bindPopup(() => {
+                                return `<div class = "popup-hover">
+                                    <h1>⛴️ Route:</h1>
+                                    <p>${feature.properties.origin} ⇄ <br>${feature.properties.destination}</p>
+                                    <p><b><a target="_blank" href="details.html#route_${feature.properties.route_id}">View stops, schedules, & fares</a></b></p>
+                                    </div>`;
+                            },
+                            { 
+                                autoPan: true, 
+                                keepInView: true, 
+                                offset: L.point(0, 0),
+                                className: "popup-hover-route"
+                            }).openPopup();
+                        });
+                        layer.on('click', function () {                            
+                            layer.setStyle({ color: "#f06b42", weight: 6 })
+                            layer.bindPopup(() => {
+                                return `<div class = "popup-hover">
+                                    <h1>⛴️ Route:</h1>
+                                    <p>${feature.properties.origin} ⇄ <br>${feature.properties.destination}</p>
+                                    <p><b><a target="_blank" href="details.html#route_${feature.properties.route_id}">View stops, schedules, & fares</a></b></p>
+                                    </div>`;
+                            },
+                            { 
+                                autoPan: true, 
+                                keepInView: true, 
+                                offset: L.point(0, 0),
+                                className: "popup-hover-route"
+                            }).openPopup();
+                            // function generateOperatorTables(operators) {
+                            //     if (!operators || Object.keys(operators).length === 0) return "<p>No operator data available.</p>";
+                            //     return Object.entries(operators).map(([operatorName, details]) => {
+                            //         let tableRows = Object.entries(details)
+                            //             .map(([key, value]) => `<tr><td><b>${key}</b></td><td>${value}</td></tr>`)
+                            //             .join("");
+                            //         return `<h2>${operatorName} Operator</h2>
+                            //             <p><table class='popup-table'">${tableRows}</table></p>`;
+                            //     }).join("");
+                            // }
+                            // layer.bindPopup(() => {
+                            //     const operatorTables = generateOperatorTables(feature.properties.operator);
+                            //     return `<div class = "popup-clicked">
+                            //         <h1>⛴️ Route: ${feature.properties.origin} - ${feature.properties.destination}</h1>
+                            //         ${operatorTables}
+                            //         <p>🚩 Is something incorrect? Please <a target="_blank" href=https://forms.clickup.com/37317836/f/13jv6c-26472/60ATY7Y1SD75AZX1D4?Name%20of%20ferry%20jetty%20or%20route=RouteID:${feature.properties.ferry_route_id}--${feature.properties.origin.replaceAll(" ","%20")} - ${feature.properties.destination.replaceAll(" ","%20")}>send feedback</a> so we can update the map.</p>
+                            //         </div>`;
+                            // },
+                            // { 
+                            //     autoPan: true, 
+                            //     keepInView: true, 
+                            //     offset: L.point(0, 200),
+                            //     className: "popup-clicked-route"
+                            // }).openPopup();
+                        });
+                        layer.on('mouseout', function () {
+                            resetRoutes();
+                        });
+                    }
+                }).addTo(map);
+
+                ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                // JETTIES
+                ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+                ferryJettiesLayer = L.geoJSON(jettiesData, {
+                    pointToLayer: (feature, latlng) => {
+                        // if (!isValidCoordinates([latlng.lat, latlng.lng])) {
+                        //     console.warn('Skipping jetty with invalid coordinates:', feature);
+                        //     return null; // Skip this jetty if coordinates are invalid
+                        // }
+                        let color = feature.properties.quality === "Less developed" ? "#801500" : "#000000";
+                        return L.circleMarker(latlng, {
+                            radius: 6,
+                            color: "white",
+                            weight: 0.5,
+                            fillColor: color,
+                            fillOpacity: 0.8
+                        });
+                    },
+                    onEachFeature: (feature, layer) => {
+                        layer.on('mouseover', function () {
+                            layer.bindPopup(`<div class="popup-hover">
+                                <h1>📍 Facility:</h1>
+                                <p>${feature.properties.name}</p>
+                                <p><b><a href="details.html#stop_${feature.properties.ferry_stop_id}">View all destinations and routes</b></p>
+                                </div>`,
+                            { 
+                                autoPan: true, 
+                                keepInView: true, 
+                                offset: L.point(0, 0),
+                                className: "custom-popup" // Optional: Add custom styles
+                            }).openPopup();
+                            highlightRoutes(feature.properties.ferry_stop_id);
+                        });
+                        layer.on('click', function () {
+
+                            const imageCellContent = (feature.properties.s3_url == "-") 
+                                ? "" 
+                                : `<div class="jetty-image-container"><img src="${feature.properties.s3_url}"></div>`;
+
+                            layer.bindPopup(`<div class="popup-hover">
+                                <h1>📍 Facility:</h1>
+                                <p>${feature.properties.name}</p>
+                                <p><b><a href="details.html#stop_${feature.properties.ferry_stop_id}">View all destinations and routes</b></p>
+                                </div>`,
+                            { 
+                                autoPan: true, 
+                                keepInView: true, 
+                                offset: L.point(0, 0),
+                                className: "custom-popup" // Optional: Add custom styles
+                            }).openPopup();
+                                // layer.bindPopup(() => {
+                            //     return `<div class = "popup-clicked">
+                            //         <h1>📍 ${feature.properties.name}</h1>
+                            //         ${imageCellContent}
+                            //         <p>Ownership: ${feature.properties.ownership}</p>
+                            //         <p>Facility Type: ${feature.properties["type"]}</p>
+                            //         <p>Facility Quality: ${feature.properties.quality}</p>
+                            //         <h2>Destinations</h2>
+                            //         <p>👆 Click on the red, highlighted routes to see schedules, fares, and operator details. 
+                            //         <h2>More info</h2>
+                            //         <p>🔍 View pics and reviews on <a href=${feature.properties.google_maps_url}>Google Maps</a>.</p>
+                            //         <p>🚩 Is something incorrect? Please <a target="_blank" href=https://forms.clickup.com/37317836/f/13jv6c-26472/60ATY7Y1SD75AZX1D4?Name%20of%20ferry%20jetty%20or%20route=TerminalID:${feature.properties.ferry_stop_id}--${feature.properties.name}>send feedback</a> so we can update the map.</p>
+                            //         </div>`;
+                            // },
+                            // { 
+                            //     autoPan: true, 
+                            //     keepInView: true,
+                            //     offset: L.point(0, 200),
+                            //     className: "popup-clicked-jetty"
+                            // }).openPopup();
+                            highlightRoutes(feature.properties.ferry_stop_id);
+                        });
+                        // layer.on('mouseout', function () {
+                        //     // TODO: make layerInteraction status persist
+                        //     if (layerInteraction == 'hovered') {
+                        //         resetRoutes();
+                        //     }
+                        // });
+                    }
+                }).addTo(map);
+
+                map.on('click', function () {
+                    resetRoutes();
+                });
+
+                document.getElementById("loading").style.display = "none";
+                document.getElementById("map").style.visibility = "visible";
+                map.invalidateSize();
+            } catch (error) {
+                console.error("Error loading ferry data:", error);
+                document.getElementById("loading").innerText = "Failed to load data. Please try again.";
+            }
+        }
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // FUNCTIONS
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        // Validation function for coordinates
+        // function isValidCoordinates(coordinates) {
+        //     // Check if coordinates is an array and if each coordinate is a valid number (lat, lng)
+        //     if (!Array.isArray(coordinates)) return false;            
+        //     // Handle different geometry types (LineString or MultiLineString for routes)
+        //     if (coordinates[0] && Array.isArray(coordinates[0])) {
+        //         // If it's a MultiLineString (array of lines)
+        //         return coordinates.every(line => Array.isArray(line) && line.length === 2 && !isNaN(line[0]) && !isNaN(line[1]));
+        //     } else {
+        //         // If it's a LineString (single line) or Point (single coordinate pair for jetties)
+        //         return coordinates.length >= 2 && coordinates.every(coord => Array.isArray(coord) && coord.length === 2 && !isNaN(coord[0]) && !isNaN(coord[1]));
+        //     }
+        // }
+        
+        function highlightRoutes(stopId) {
+            resetRoutes();
+            routeLayers.forEach(layer => {
+                let stopIds = layer.feature.properties.list_of_stop_ids;
+                if (typeof stopIds === "string") {
+                    stopIds = stopIds.split(',').map(id => id.trim());
+                }
+                if (Array.isArray(stopIds) && stopIds.includes(stopId.toString())) {
+                    layer.setStyle({ color: "#f05042", weight: 6 });
+                }
+            });
+        }
+        function resetRoutes() {
+            routeLayers.forEach(layer => {
+                layer.setStyle(layer.defaultStyle);
+            });
+        }
+
+        loadFerryData();
+    </script>
+
+    <script>
+        lucide.createIcons(); // Load icons
+
+        function toggleTooltip(event) {
+            let tooltip = event.currentTarget.querySelector('.tooltip');
+            tooltip.style.visibility = tooltip.style.visibility === "visible" ? "hidden" : "visible";
+            tooltip.style.opacity = tooltip.style.opacity === "1" ? "0" : "1";
+
+            // Close tooltip when clicking outside (Mobile)
+            document.addEventListener("click", function closeTooltip(e) {
+                if (!event.currentTarget.contains(e.target)) {
+                    tooltip.style.visibility = "hidden";
+                    tooltip.style.opacity = "0";
+                    document.removeEventListener("click", closeTooltip);
+                }
+            });
+        }
+    </script>
+
+
+</body>
+</html>

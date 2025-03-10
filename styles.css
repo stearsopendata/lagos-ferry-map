@@ -1,0 +1,527 @@
+/* ========================================================================================================================
+   Global Styles
+======================================================================================================================== */
+
+body { 
+    margin: 0; 
+    padding: 0; 
+    font-family: "Manrope", sans-serif;
+    font-style: normal;
+    /* background-color: rgb(246, 250, 254); */
+}
+h1 {
+    font-size: 2rem;
+    font-weight: bold;
+}
+@media (max-width: 768px) {
+    h1 {
+        font-size: 1.7rem;
+        font-weight: bold;
+    }
+}
+.container {
+    max-width: 800px;
+    margin: 0 auto; /* Centers the container */
+    text-align: left; /* Ensures content inside is left-aligned */
+    padding: 1.5rem;
+    background-color: white;
+}
+.container h2 {
+    margin-top: 3rem;
+}
+p {
+    font-style: normal;
+    font-size: 0.78rem;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    max-height: 500px;
+    overflow-y: auto;
+    display: block;
+    background-color: rgb(234, 238, 241);
+}
+thead {
+    /* position: sticky; */
+    top: -0.5px;
+    background-color: black;
+    border: 2px solid white;
+    z-index: 2;
+}
+th, td {
+    border: 2px solid white;
+    padding: 1.1rem;
+    text-align: left;
+    vertical-align: top;
+    font-size: .8rem;
+}
+th {
+    color: white;
+    background-color: black;
+}
+a {
+    text-decoration: none;
+    color: #498bf7;
+}
+.sub-row {
+    background-color: #f9f9f9;
+}
+ul {
+    padding-left: 20px;
+}
+.accordion {
+    cursor: pointer;
+    padding: .8rem;
+    width: 100%;
+    text-align: left;
+    border: none;
+    outline: none;
+    background-color: #ddd;
+    font-size: 1rem;
+    margin-top: 1rem;
+}
+.accordion-content {
+    display: none;
+    padding: .5rem;
+}
+.carousel {
+    display: flex;
+    overflow-x: auto;
+    overflow-y: hidden;
+    gap: 10px;
+    padding-top: 0px;
+    padding-bottom: 10px;
+    /* background-color: black; */
+    margin-top: 0px;
+    margin-bottom: 0rem;
+    height: 405px;
+}
+/* .carousel iframe {
+    flex: 0 0 auto;
+    width: 11.35rem;
+    height: 20rem;
+    border: none;
+}   */
+.instagram-media {
+    min-height: 400px !important;
+    margin: auto; /* Centers the embed */
+}
+.jetty-image-container {
+    width: 220px;
+    max-height: 150px;
+    overflow: hidden;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+.jetty-image-container img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+}
+.btn-back-to-top {
+    position: sticky;
+    top: calc(100vh - 50px);
+    left: 15px;
+    background-color: black;
+    color: white;
+    padding: 10px 1.2rem;
+    border: none;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background 0.3s;
+}
+.btn-back-to-top:hover {
+    background-color: #498bf7;
+}
+.section-icon {
+    height: 20px;
+    width: 20px;
+}
+
+/* ========================================================================================================================
+   Navigation Bar
+======================================================================================================================== */
+
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: black;
+    padding: 15px 20px;
+    color: white;
+    top: 0px;
+    height: 2.6rem;
+}
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    margin-top: 5px;
+}
+.logo img {
+    height: 2.4rem;
+    align-items: center;
+}
+.nav-title {
+    margin-bottom: .2rem;
+    display: block;
+    font-size: 2rem;
+    font-weight: bold;
+}
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    margin-bottom: .2rem;
+}
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s;
+}
+.nav-links .nav-a-current {
+    color: #498bf7;
+}
+.nav-links a:hover {
+    color: #498bf7;
+}
+.btn {
+    background-color: white;
+    color: black;
+    padding: 8px 1.2rem;
+    border: none;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background 0.3s;
+}
+.btn:hover {
+    background-color: #498bf7;
+}
+/* Responsive for Mobile */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+    }
+    .logo img {
+        height: 1.8rem;
+        align-items: center;
+    }
+    .nav-title {
+        font-size: 1.1rem;
+        font-weight: bold;
+        margin-bottom: 0.2rem;
+    }
+}
+
+/* ========================================================================================================================
+   Map page and map elements
+======================================================================================================================== */
+
+/* ===================================================================================================================== */
+/* Map page intro info panel and popup */
+
+#panel {
+    position: fixed;
+    bottom: 0;
+    top: 4.5rem;
+    right: 0;
+    width: 280px;
+    background: rgba(255, 255, 255, 1);
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    z-index: 2001;
+    overflow-y: scroll;
+}
+#panel h1 {
+    font-size: 1rem;
+    margin-top: 0rem;
+    padding-top: 0rem;
+}
+#panel h2 {
+    font-size: 1.2rem;
+}
+
+/* Popup Style (Hidden by Default) */
+#popup {
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 300px; /* Maximum width */
+    max-height: 45vh; /* Maximum height */
+    background: white;
+    padding: 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    overflow-y: scroll; /* Enable scrolling */
+    z-index: 5001;
+}
+#popup h1 {
+    font-size: 1rem;
+    margin-top: 0rem;
+    padding-top: 0rem;
+}
+#popup h2 {
+    font-size: 1.2rem;
+}
+/* Mobile View: Hide Info Pane & Show Popup */
+@media (max-width: 768px) {
+    #panel {
+        display: none;
+    }
+    #popup {
+        display: block;
+    }
+}
+
+.close-btn {
+    position: absolute;
+    top: 1.1rem;
+    right: 1.8rem;
+    width: 5px;
+    height: 5px;
+    cursor: pointer;
+    color: #a5acb8;
+    background: none;
+    border: none;
+}
+
+#info-icon {
+    position: fixed;
+    top: 95px;
+    right: 20px;
+    color: black;
+    cursor: pointer;
+    font-size: 20px;
+    z-index: 2002;
+    display: none;
+}
+
+/* ===================================================================================================================== */
+/* Map */
+
+#main-element {
+    position: absolute;
+    top: 4.5rem;
+    width: 100%;
+    height: calc(100vh - 4.5rem);
+}
+#map {
+    position: static;
+    height: calc(100vh - 4.5rem);
+    width: 100%; 
+    visibility: hidden;
+    z-index: 2;
+}
+#loading { 
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(255, 255, 255, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* ===================================================================================================================== */
+/* Map legend */
+
+#legend {
+    position: fixed;
+    top: 5.4rem;
+    left: .8rem;
+    background: rgba(255, 255, 255, 1);
+    padding-top: .5rem;
+    padding-bottom: .5rem;
+    padding-left: .9rem;
+    padding-right: .8rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    font-size: 0.85rem;
+}
+#legend p {
+    margin-top: 0.3rem; 
+    margin-bottom: 0.3rem;
+}
+.legend-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+    font-size: 0.78rem;
+}
+.legend-color {
+    width: 10px;
+    height: 10px;
+    margin-right: 5px;
+    display: inline-block;
+}
+/* Legend Info Icon Tooltip Container */
+.tooltip-container {
+    position: relative;
+    top: 0.1rem;
+    display: inline-block;
+    cursor: pointer;
+}
+/* Legend Info Icon Styling */
+.legend-info {
+    width: 0.7rem;
+    height: 0.7rem;
+    color: #a5acb8;
+    margin-left: 0.1rem;
+}
+/* Legend Info Icon Tooltip Box */
+.tooltip {
+    position: absolute;
+    bottom: 150%; /* Place above the icon */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgb(30, 30, 30);
+    color: white;
+    padding: 8px;
+    border-radius: 5px;
+    font-size: .7rem;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+    min-width: 200px; /* Set min width */
+    max-width: 400px; /* Set max width */
+    white-space: normal; /* Enable text wrapping */
+    word-wrap: break-word; /* Ensure long words break */
+}
+/* Arrow under tooltip */
+.tooltip::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 6px;
+    border-style: solid;
+    border-color: black transparent transparent transparent;
+}
+/* Show tooltip on hover (Desktop) */
+.tooltip-container:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+}
+/* Mobile: Show tooltip on click */
+@media (max-width: 768px) {
+    .tooltip-container:hover .tooltip {
+        visibility: hidden; /* Disable hover tooltip on mobile */
+    }
+}
+
+/* ===================================================================================================================== */
+/* Map feature popups */
+
+/* Hovered */
+
+.popup-hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+.popup-hover h1 {
+    font-size: .7rem;
+}
+.popup-hover p {
+    font-size: .7rem;
+    color: #757575;
+    margin-top: 0.3rem;
+    margin-bottom: 0.3rem;
+}
+.popup-hover-route i {
+    display: block;
+    width: 20px;
+    height: 20px;
+    color: black;
+    z-index: 6000;
+}
+.popup-hover-route .leaflet-popup-tip {
+    display: none;
+}
+
+
+/* Clicked */
+
+.popup-clicked {
+    max-height: 300px;
+    overflow-y: auto;
+    overflow-x: none;
+}
+.popup-clicked h1 {
+    font-size: 1rem;            
+}
+.popup-clicked h2 {
+    font-size: .9rem;            
+}
+.popup-clicked p {
+    font-size: .7rem;
+    color: #757575;    
+    margin-top: 0.3rem;
+    margin-bottom: 0.3rem;        
+}
+.popup-clicked-jetty .leaflet-popup-tip {
+    display: none;
+}
+.popup-clicked-route .leaflet-popup-tip {
+    display: none;
+}
+.popup-table {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+    font-size: .7rem;
+    color: #757575;    
+    margin-top: 0.3rem;
+    margin-bottom: 0.3rem;  
+}
+/* .popup-table {
+    font-size: .7rem;
+    color: #757575;    
+    margin-top: 0.3rem;
+    margin-bottom: 0.3rem;   
+} */
+.popup-table td {
+    width: 50%;
+    padding: 5px;
+    border: 1px solid black;
+}
+
+/* ===================================================================================================================== */
+/* Map search/zoom to location */
+
+#search-box {
+    position: fixed;
+    top: 19.5rem;
+    left: .8rem;
+    z-index: 1002;
+}
+#search-box button {
+    background-color: black;
+    color: white;
+    border-color: white;
+    border-width: 0px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    padding: 0.4rem;
+    width: 1.5rem;
+    margin: 0px;
+}
+#search-input {
+    background-color: white;
+    border-color: white;
+    border-width: 0px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    padding: 0.4rem;
+    font-family: "Manrope";
+    font-size: 0.7rem;
+    width: 8.75rem;
+    margin: 0px;
+}
