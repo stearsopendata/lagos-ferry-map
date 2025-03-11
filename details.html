@@ -162,8 +162,8 @@
     <script>
         async function loadData() {
             try {
-                const jettiesResponse = await fetch('https://api.allorigins.win/raw?url=https://stears-flourish-data.s3.amazonaws.com/jetties.json');
-                const routesResponse = await fetch('https://api.allorigins.win/raw?url=https://stears-flourish-data.s3.amazonaws.com/routes.json');
+                const jettiesResponse = await fetch('https://stears-flourish-data.s3.amazonaws.com/jetties.json');
+                const routesResponse = await fetch('https://stears-flourish-data.s3.amazonaws.com/routes.json');
 
                 if (!jettiesResponse.ok || !routesResponse.ok) {
                     throw new Error("Failed to load data files.");
@@ -177,7 +177,7 @@
 
                 const jettiesTable = document.querySelector("#jetties-table tbody");
                 jettiesData.features.forEach(jetty => {
-                    const { name, ferry_stop_id, s3_url, type, ownership, quality, google_maps_url, neighborhood } = jetty.properties;
+                    const { name, ferry_stop_id, s3_url, type, ownership, quality, google_maps_url, LGA } = jetty.properties;
                     const stopIdStr = String(ferry_stop_id);
                     const matchingRoutes = routesData.features.filter(route => {
                         const routeStopIds = String(route.properties.list_of_stop_ids).split(',');
@@ -190,23 +190,35 @@
                     });
                     
                     const uniqueStopIds = [...new Set(combinedStopIds)];
-                    const destinationsGroupedByNeighborhood = {};
+                    const destinationsGroupedByLGA = {};
                     uniqueStopIds.forEach(stopId => {
                         const jettyMatch = jettiesData.features.find(j => String(j.properties.ferry_stop_id) === stopId);
                         if (jettyMatch && jettyMatch.properties.name !== name) {
                             const relevantRoutes = matchingRoutes.filter(route => route.properties.list_of_stop_ids.includes(stopId));
-                            const routeLinks = relevantRoutes.map(route => `<a href="#route_${route.properties.route_id}">${route.properties.origin} → ${route.properties.destination}</a>`).join('; ');
-                            
-                            const neighborhood = jettyMatch.properties.neighborhood || "Unknown";
-                            if (!destinationsGroupedByNeighborhood[neighborhood]) {
-                                destinationsGroupedByNeighborhood[neighborhood] = [];
+                            const routeLinks = relevantRoutes.map(route => `
+                                <p><b>Route ID:</b> ${route.properties.route_id}</p>
+                                <p><b>Origin:</b> ${route.properties.origin}</p>
+                                <p><b>Destination:</b> ${route.properties.destination}</p>
+                                <p><b>Departure Frequency:</b> ${route.properties.departure_frequency}</p>
+                                <p><b>Cost:</b> ${route.properties.cost_to_final_destination}</p>
+                                <p><a href="details.html#route_${route.properties.route_id}">View full route details</a></p>
+                            `).join('<br>');
+
+                            const LGA = jettyMatch.properties.LGA || "Unknown";
+                            if (!destinationsGroupedByLGA[LGA]) {
+                                destinationsGroupedByLGA[LGA] = [];
                             }
-                            destinationsGroupedByNeighborhood[neighborhood].push(`<li>${jettyMatch.properties.name} (${routeLinks})</li>`);
+                            destinationsGroupedByLGA[LGA].push(`
+                                <button class="accordion">${jettyMatch.properties.name} <i class="accordion-icon" data-lucide="chevron-down"></i></button>
+                                <div class="accordion-panel">
+                                    ${routeLinks}
+                                </div>
+                            `);
                         }
                     });
 
-                    let destinationsHTML = Object.entries(destinationsGroupedByNeighborhood).map(([neighborhood, destinations]) => {
-                        return `<strong>${neighborhood}</strong><ul>${destinations.join('')}</ul>`;
+                    let destinationsHTML = Object.entries(destinationsGroupedByLGA).map(([LGA, destinations]) => {
+                        return `<strong>${LGA}</strong><br>${destinations.join('')}`;
                     }).join('');
 
                     const imageCellContent = (s3_url == "-") 
@@ -221,7 +233,7 @@
                             ${imageCellContent}
                         </td>
                         <td>
-                            <b>Neighborhood:</b><br>Lekki 1
+                            <b>LGA:</b><br>${LGA}
                             <br>
                             <br>
                             <b>Facility Type:</b><br>${type}
@@ -241,6 +253,7 @@
                             🚩 Is something incorrect? <a target="_blank" href=https://forms.clickup.com/37317836/f/13jv6c-26472/60ATY7Y1SD75AZX1D4?Name%20of%20map%20feature=StopID:${ferry_stop_id}--${name}>Send feedback</a>.</p>                    
                         </td>
                         <td>
+                            <b>Destinations by LGA</b><br>
                             ${matchingRoutes.length} Route(s)
                             <br><br>
                             ${destinationsHTML}
@@ -290,7 +303,8 @@
                                 <li><b>Stops on the Route</b>:<ul>
                                     <li>Stop(s): ${op.stops_along_the_route}</li>
                                     <li>Duration Breakdown: ${op.duration_between_stops}</li>
-                                    <li>Cost Breakdown: ${op.cost_between_stops}</li></ul>                                <li><b>Weekend</b>: ${op.weekend}</li>
+                                    <li>Cost Breakdown: ${op.cost_between_stops}</li></ul>
+                                    <li><b>Weekend</b>: ${op.weekend}</li>
                                 <li><b>Additional Notes</b>: ${op.rain}</li>
                             </ul>`;
                     } else {
@@ -310,19 +324,22 @@
                     routesTable.appendChild(row);
                 });
 
+                document.querySelectorAll(".accordion").forEach(button => {
+                    button.addEventListener("click", function() {
+                        const accordionPanel = this.nextElementSibling;
+                        const icon = this.querySelector('i');
+                        accordionPanel.style.display = accordionPanel.style.display === "block" ? "none" : "block";
+                        icon.setAttribute('data-lucide', accordionPanel.style.display === "block" ? 'chevron-up' : 'chevron-down');
+                        lucide.createIcons();
+                    });
+                });
+
             } catch (error) {
                 console.error("Error loading data:", error.message);
             }
         }
 
         document.addEventListener("DOMContentLoaded", loadData);
-
-        document.querySelectorAll(".accordion").forEach(button => {
-            button.addEventListener("click", function() {
-                this.nextElementSibling.classList.toggle("show");
-                this.nextElementSibling.style.display = this.nextElementSibling.style.display === "block" ? "none" : "block";
-            });
-        });
 
         document.addEventListener("DOMContentLoaded", () => {
             loadData().then(() => {

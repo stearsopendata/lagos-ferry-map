@@ -7,7 +7,6 @@ body {
     padding: 0; 
     font-family: "Manrope", sans-serif;
     font-style: normal;
-    /* background-color: rgb(246, 250, 254); */
 }
 h1 {
     font-size: 2rem;
@@ -64,26 +63,8 @@ a {
     text-decoration: none;
     color: #498bf7;
 }
-.sub-row {
-    background-color: #f9f9f9;
-}
 ul {
     padding-left: 20px;
-}
-.accordion {
-    cursor: pointer;
-    padding: .8rem;
-    width: 100%;
-    text-align: left;
-    border: none;
-    outline: none;
-    background-color: #ddd;
-    font-size: 1rem;
-    margin-top: 1rem;
-}
-.accordion-content {
-    display: none;
-    padding: .5rem;
 }
 .carousel {
     display: flex;
@@ -97,15 +78,34 @@ ul {
     margin-bottom: 0rem;
     height: 405px;
 }
-/* .carousel iframe {
-    flex: 0 0 auto;
-    width: 11.35rem;
-    height: 20rem;
-    border: none;
-}   */
 .instagram-media {
     min-height: 400px !important;
     margin: auto; /* Centers the embed */
+}
+.accordion {
+    cursor: pointer;
+    padding: .8rem;
+    width: 100%;
+    text-align: left;
+    border: none;
+    outline: none;
+    background-color: #ddd;
+    font-size: .8rem;
+    margin-top: 1rem;
+}
+.accordion-icon {
+    position: relative;
+    top: 4px;
+    width: 17px;
+    height: 17px;
+}
+.accordion-panel {
+    padding: .8rem;
+    text-align: left;
+    border: none;
+    outline: none;
+    background-color: #ffffff;
+    font-size: .8rem;
 }
 .jetty-image-container {
     width: 220px;
@@ -250,18 +250,18 @@ ul {
 
 /* Popup Style (Hidden by Default) */
 #popup {
-    display: none; /* Hidden by default */
+    display: none;
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 90%;
-    max-width: 300px; /* Maximum width */
-    max-height: 45vh; /* Maximum height */
+    max-width: 300px;
+    max-height: 45vh;
     background: white;
     padding: 20px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-    overflow-y: scroll; /* Enable scrolling */
+    overflow-y: scroll;
     z-index: 5001;
 }
 #popup h1 {
@@ -434,8 +434,9 @@ ul {
 .popup-hover p {
     font-size: .7rem;
     color: #757575;
-    margin-top: 0.3rem;
-    margin-bottom: 0.3rem;
+    margin-top: 0.1rem;
+    margin-bottom: 0.1rem;
+    padding: 0px;
 }
 .popup-hover-route i {
     display: block;
@@ -444,10 +445,6 @@ ul {
     color: black;
     z-index: 6000;
 }
-.popup-hover-route .leaflet-popup-tip {
-    display: none;
-}
-
 
 /* Clicked */
 
@@ -465,8 +462,8 @@ ul {
 .popup-clicked p {
     font-size: .7rem;
     color: #757575;    
-    margin-top: 0.3rem;
-    margin-bottom: 0.3rem;        
+    margin-top: 0.1rem;
+    margin-bottom: 0.1rem;        
 }
 .popup-clicked-jetty .leaflet-popup-tip {
     display: none;
@@ -483,12 +480,6 @@ ul {
     margin-top: 0.3rem;
     margin-bottom: 0.3rem;  
 }
-/* .popup-table {
-    font-size: .7rem;
-    color: #757575;    
-    margin-top: 0.3rem;
-    margin-bottom: 0.3rem;   
-} */
 .popup-table td {
     width: 50%;
     padding: 5px;
