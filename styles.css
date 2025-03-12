@@ -14,38 +14,36 @@ h1 {
 }
 @media (max-width: 768px) {
     h1 {
-        font-size: 1.7rem;
+        font-size: 1.5rem;
     }
 }
 .container {
     max-width: 800px;
+    width: 100%;
+    align-items: center;
     margin: 0 auto; /* Centers the container */
     text-align: left; /* Ensures content inside is left-aligned */
-    padding: 1.5rem;
+    padding-top: 70px;
+    padding-left: 20px;
+    padding-right: 20px;
     background-color: white;
 }
 .container h2 {
-    margin-top: 3rem;
+    margin-top: 2.8rem;
 }
 p {
     font-style: normal;
     font-size: 0.78rem;
 }
+.feedback-cta {
+    font-size: 0.7rem;
+    color: #757575;
+}
 table {
     width: 100%;
-    border-collapse: collapse;
+    max-width: 800px;
     margin-bottom: 20px;
-    max-height: 500px;
-    overflow-y: auto;
     display: block;
-    background-color: rgb(234, 238, 241);
-}
-thead {
-    /* position: sticky; */
-    top: -0.5px;
-    background-color: black;
-    border: 2px solid white;
-    z-index: 2;
 }
 th, td {
     border: 2px solid white;
@@ -55,8 +53,7 @@ th, td {
     font-size: .8rem;
 }
 th {
-    color: white;
-    background-color: black;
+    color: black;
 }
 a {
     text-decoration: none;
@@ -64,6 +61,7 @@ a {
 }
 ul {
     padding-left: 20px;
+    font-size: .8rem;
 }
 .carousel {
     display: flex;
@@ -72,7 +70,6 @@ ul {
     gap: 10px;
     padding-top: 0px;
     padding-bottom: 10px;
-    /* background-color: black; */
     margin-top: 0px;
     margin-bottom: 0rem;
     height: 405px;
@@ -83,13 +80,17 @@ ul {
 }
 .accordion {
     cursor: pointer;
-    padding: .8rem;
+    padding-left: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
     width: 100%;
     text-align: left;
     border: none;
     outline: none;
-    background-color: #ddd;
+    background-color: black;
+    color: white;
     font-size: .8rem;
+    font-weight: bold;
     margin-top: 1rem;
 }
 .accordion-icon {
@@ -99,12 +100,50 @@ ul {
     height: 17px;
 }
 .accordion-panel {
-    padding: .8rem;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 5px;
+    padding-bottom: 10px;
     text-align: left;
-    border: none;
     outline: none;
     background-color: #ffffff;
     font-size: .8rem;
+}
+.featureCard {
+    background-color: #ececec;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+.featureCard h2 {
+    font-size: 1.2rem;
+    margin-top: 0rem;
+}
+.featureCard h3 {
+    font-size: 1rem;
+    margin-top: 2rem;
+    margin-bottom: 0rem;
+}
+.featureCard table {
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+    table-layout: fixed;
+}
+.featureCard th, td {
+    border: 2px solid white;
+    padding: 10px;
+    text-align: left;
+    vertical-align: top;
+    font-size: .8rem;
+    width: 50%;
+}
+.featureCard ol {
+    margin: 0px;
+    padding-left: 10px;
 }
 .jetty-image-container {
     width: 220px;
@@ -121,10 +160,10 @@ ul {
     object-position: center;
     display: block;
 }
-#hidden-top {
+/* #hidden-top {
     position: fixed;
     top: -200px;
-}
+} */
 .btn-back-to-top {
     position: sticky;
     top: calc(100vh - 50px);
@@ -150,25 +189,27 @@ ul {
 ======================================================================================================================== */
 
 .navbar {
+    position: fixed;
+    width: 100%;
     display: flex;
-    align-items: center;
+    align-items: left;
     justify-content: space-between;
     background-color: black;
-    padding: 15px 20px;
+    padding-left: 20px;
+    padding-right: 20px;
     color: white;
     top: 0px;
-    height: 2.6rem;
+    height: 80px;
 }
-.logo {
-    position: fixed;
-    left: 1.0rem;
+.logo-and-title {
     display: flex;
     align-items: center;
     gap: 1.2rem;
-    margin-top: 5px;
 }
-.logo img {
-    height: 2.4rem;
+.logo-and-title img {
+    padding-top: 5px;
+    height: 40px;
+    width: auto;
     align-items: center;
 }
 .nav-title {
@@ -178,12 +219,11 @@ ul {
     font-weight: bold;
 }
 .nav-links {
-    position: fixed;
-    right: 1.0rem;
     display: flex;
     align-items: center;
     gap: 1.2rem;
-    margin-bottom: .2rem;
+    margin: .2rem;
+    padding-right: 35px;
 }
 .nav-links a {
     color: white;
@@ -211,8 +251,8 @@ ul {
 }
 .hamburger {
     position: fixed;
-    right: 1.0rem;
-    top: 1.3rem;
+    right: 20px;
+    top: 25px;
     display: none;
     cursor: pointer;
     z-index: 200001;
@@ -227,13 +267,13 @@ ul {
 .nav-links-mobile {
     display: none;
     flex-direction: column;
-    position: absolute;
-    top: 4rem;
-    right: 0;
+    position: fixed;
+    top: 80px;
+    right: 20px;
     background-color: black;
     width: 40%;
     text-align: right;
-    z-index: 200001;
+    z-index: 2000001;
 }
 .nav-links-mobile a {
     padding-right: 1.1rem;
@@ -242,18 +282,17 @@ ul {
 /* Responsive for Mobile */
 @media (max-width: 768px) {
     .navbar {
-        flex-direction: column;
-        text-align: center;
+        text-align: left;
         gap: 10px;
+        width: 100%;
     }
-    .logo img {
-        height: 2.2rem;
+    .logo-and-title img {
         align-items: center;
     }
     .nav-title {
-        font-size: 1.1rem;
+        margin-top: 5px;
+        font-size: 1.5rem;
         font-weight: bold;
-        margin-bottom: 0.2rem;
     }
     .nav-links {
         display: none;
@@ -273,10 +312,11 @@ ul {
 #panel {
     position: fixed;
     bottom: 0;
-    top: 4.5rem;
+    top: 80px;
     right: 0;
     width: 280px;
-    background: rgba(255, 255, 255, 1);
+    color: white;
+    background: rgb(27, 27, 27);
     box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
     padding: 20px;
     z-index: 5001;
@@ -300,7 +340,7 @@ ul {
     transform: translate(-50%, -50%);
     width: 70%;
     max-width: 300px;
-    max-height: 45vh;
+    max-height: 1000px;
     color: white;
     background: black;
     padding: 20px;
@@ -354,13 +394,14 @@ ul {
 
 #main-element {
     position: absolute;
-    top: 4.5rem;
+    top: 80px;
     width: 100%;
-    height: calc(100vh - 4.5rem);
+    height: calc(100vh - 55px);
 }
 #map {
-    position: static;
-    height: calc(100vh - 4.5rem);
+    position: fixed;
+    top: 80px;
+    height: calc(100vh - 80px);
     width: 100%; 
     visibility: hidden;
     z-index: 2;
@@ -381,8 +422,8 @@ ul {
 
 #legend {
     position: fixed;
-    top: 5.4rem;
-    left: .8rem;
+    top: 100px;
+    left: 20px;
     background: rgba(255, 255, 255, 1);
     padding-top: .5rem;
     padding-bottom: .5rem;
@@ -410,7 +451,7 @@ ul {
 }
 @media (max-width: 768px) {
     #legend {
-        top: 4.5rem;
+        top: 80px;
         left: 0rem;
     }
     #legend p {
@@ -431,8 +472,8 @@ ul {
 .legend-info {
     width: 0.7rem;
     height: 0.7rem;
-    color: #a5acb8;
-    margin-left: 0.1rem;
+    color: #989898;
+    margin-left: 0.3rem;
 }
 /* Legend Info Icon Tooltip Box */
 .tooltip {
@@ -506,6 +547,7 @@ ul {
 
 .popup-clicked {
     max-height: 300px;
+    max-width: 100px;
     overflow-y: auto;
     overflow-x: none;
     z-index: 6000;

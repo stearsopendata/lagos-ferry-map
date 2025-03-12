@@ -62,49 +62,24 @@
     </script>
     
     <script src="https://unpkg.com/lucide@latest"></script>
-
-    <!-- <style>
-        /* Add styles for the hamburger menu */
-        .hamburger {
-            display: none;
-            cursor: pointer;
+    <style>
+        .jetty-label {
+            background-color: transparent;
+            border: none;
+            padding: 2px;
+            font-size: 12px;
+            font-style: bold;
+            font-weight: bold;
+            white-space: nowrap;
+            text-shadow: 5px 5px 5px white;
         }
-        .hamburger div {
-            width: 25px;
-            height: 3px;
-            background-color: white;
-            margin: 5px;
-        }
-        .nav-links-mobile {
-            display: none;
-            flex-direction: column;
-            position: absolute;
-            top: 2.6rem;
-            right: 0;
-            background-color: black;
-            width: 100%;
-            text-align: right;
-        }
-        .nav-links-mobile a {
-            padding: 10px;
-            border-bottom: 1px solid #498bf7;
-        }
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-            .hamburger {
-                display: block;
-            }
-        }
-    </style> -->
-
+    </style>
 </head>
 
 <body>
 
     <nav class="navbar">
-        <div class="logo">
+        <div class="logo-and-title">
             <a href="https://www.stears.co/open-data/"><img src="https://cdn.prod.website-files.com/661d31a2986c2e235986f9dd/678a3aad73835b8b2380afc5_Layer_1-p-500.png"></a>
             <div class="nav-title">Lagos Ferry Map</div>
         </div>
@@ -130,10 +105,10 @@
     <div id="main-element">
         <div id="loading">Loading map data...</div>
 
-        <div id="search-box">
+        <!-- <div id="search-box">
             <input type="text" id="search-input" placeholder="Zoom to a location...">
             <button onclick="searchLocation()">➤</button>
-        </div>
+        </div> -->
 
         <div id="map"></div>
 
@@ -144,7 +119,7 @@
             <button class="close-btn" onclick="closePanel()"><i data-lucide="x"></i></button>
             <h1>About the Lagos Ferry Map</h1>
             <h2>Our goal</h2>
-            <p>We want to educate Lagos commuters about water transit alternatives, enabling faster, more enjoyable commutes. That's why we deployed a team of data collectors to gather detailed information about the routes, schedules, and fares, creating the first comprehensive map.</p>
+            <p>We want to educate Lagos commuters about water transit alternatives, enabling faster, more enjoyable commutes. That's why we deployed a data collection team to gather detailed information about the routes, schedules, and fares, creating the first-ever comprehensive map.</p>
             <p><a href="details.html">Read about the ferries and mapping process.</a></p>
             <p>Concerned about safety? <a href="details.html#safety">Learn more.</a></p>
             <h2>Limitations</h2>
@@ -157,13 +132,12 @@
             <button class="close-btn" onclick="closePopup()"><i data-lucide="x"></i></button>
             <h1>About the Lagos Ferry Map</h1>
             <h2>Our goal</h2>
-            <p>We want to educate Lagos commuters about water transit alternatives, hopefully enabling faster, more enjoyable commutes. That's why we deployed a team of data collection contractors to gather detailed information about the routes, schedules, and fares.</p>
-            <p><a href="">Read about the ferries and mapping process.</a></p>
-            <p>Concerned about safety? <a href="your-link.html">Learn more.</a></p>
+            <p>We want to educate Lagos commuters about water transit alternatives, enabling faster, more enjoyable commutes. That's why we created the first-ever comprehensive map, including details on schedules, fares, and operators.</p>
+            <p><a href="details.html">Read about the ferries and mapping process.</a></p>
+            <p>Concerned about safety? <a href="details.html#safety">Learn more.</a></p>
             <h2>Limitations</h2>
             <p>Private, informal transit operations are always subject to change. This information was collected in <b>February 2025</b>. To stay up-to-date, we have included a user feedback feature where users can submit updates to the data.</p>
-            <p>This map presents the full spectrum of ferry facilities and routes, including some that are quite undeveloped and would be a better fit for commuters who are more adventurous and don't mind getting their shoes muddy.</p>
-        </div>
+       </div>
 
         <div id="legend">
             <p><b>Facility Quality</b></p>
@@ -249,7 +223,7 @@
                     if (data.length > 0) {
                         var lat = data[0].lat;
                         var lon = data[0].lon;
-                        map.setView([lat, lon], 14);
+                        map.setView([lat, lon], 13);
                     } else {
                         alert("Location not found. Try another search.");
                     }
@@ -260,6 +234,7 @@
         var ferryJettiesLayer, ferryRoutesLayer;
         var routeLayers = [];
         var isClickPopup = false;
+        var jettyLabels = [];
 
         async function loadFerryData() {
             const jettiesURL = "https://stears-flourish-data.s3.amazonaws.com/jetties.json";
@@ -306,17 +281,6 @@
                         layer.on('mouseover', function (e) {
                             resetRoutes();
                             layer.setStyle({ color: "#f05042", weight: 6 });
-                            layer.bindPopup(() => {
-                                return `<div class = "popup-hover">
-                                    <p>⛴️ Click for route details</p>
-                                    </div>`;
-                            },
-                            { 
-                                autoPan: true, 
-                                keepInView: true, 
-                                offset: L.point(0, 0),
-                                className: "popup-hover-route"
-                            }).openPopup(e.latlng);
                         });
                         layer.on('click', function (e) {
                             resetRoutes();
@@ -364,15 +328,6 @@
                     onEachFeature: (feature, layer) => {
                         layer.on('mouseover', function (e) {
                             resetRoutes();
-                            layer.bindPopup(`<div class="popup-hover">
-                                <p>📍 Click for facility details</p>
-                                </div>`,
-                            { 
-                                autoPan: true, 
-                                keepInView: true, 
-                                offset: L.point(0, 8),
-                                className: "popup-hover-jetty"
-                            }).openPopup(e.latlng);
                             highlightRoutes(feature.properties.ferry_stop_id);
                         });
                         layer.on('click', function (e) {
@@ -385,7 +340,7 @@
                             layer.bindPopup(`<div class="popup-click">
                                 <p>📍 Facility</p>
                                 <p><b>${feature.properties.name}</b></p>
-                                <p><b><a target="_blank" href="details.html#stop_${feature.properties.ferry_stop_id}">View all destinations and routes</b></p>
+                                <p><b><a target="_blank" href="details.html#stop_${feature.properties.ferry_stop_id}">View all destinations and routes available from this location</b></p>
                                 </div>`,
                             { 
                                 autoPan: true, 
@@ -402,12 +357,30 @@
                                 resetRoutes();
                             }
                         });
+
+                        // Add labels for jetties
+                        var label = L.marker([layer.getLatLng().lat + 0.001, layer.getLatLng().lng], {
+                            icon: L.divIcon({
+                                className: 'jetty-label',
+                                html: feature.properties.name,
+                                iconSize: [100, 20]
+                            })
+                        });
+                        jettyLabels.push(label);
                     }
                 }).addTo(map);
 
                 map.on('click', function () {
                     isClickPopup = false;
                     resetRoutes();
+                });
+
+                map.on('zoomend', function () {
+                    if (map.getZoom() >= 14) {
+                        jettyLabels.forEach(label => map.addLayer(label));
+                    } else {
+                        jettyLabels.forEach(label => map.removeLayer(label));
+                    }
                 });
 
                 document.getElementById("loading").style.display = "none";
@@ -467,7 +440,6 @@
             navLinksMobile.style.display = navLinksMobile.style.display === "flex" ? "none" : "flex";
         }
     </script>
-
 
 </body>
 </html>
