@@ -15,7 +15,6 @@ h1 {
 @media (max-width: 768px) {
     h1 {
         font-size: 1.7rem;
-        font-weight: bold;
     }
 }
 .container {
@@ -122,6 +121,10 @@ ul {
     object-position: center;
     display: block;
 }
+#hidden-top {
+    position: fixed;
+    top: -200px;
+}
 .btn-back-to-top {
     position: sticky;
     top: calc(100vh - 50px);
@@ -157,6 +160,8 @@ ul {
     height: 2.6rem;
 }
 .logo {
+    position: fixed;
+    left: 1.0rem;
     display: flex;
     align-items: center;
     gap: 1.2rem;
@@ -173,6 +178,8 @@ ul {
     font-weight: bold;
 }
 .nav-links {
+    position: fixed;
+    right: 1.0rem;
     display: flex;
     align-items: center;
     gap: 1.2rem;
@@ -202,6 +209,36 @@ ul {
 .btn:hover {
     background-color: #498bf7;
 }
+.hamburger {
+    position: fixed;
+    right: 1.0rem;
+    top: 1.3rem;
+    display: none;
+    cursor: pointer;
+    z-index: 200001;
+}
+.hamburger div {
+    width: 25px;
+    height: 3px;
+    background-color: white;
+    margin: 5px;
+    z-index: 200001;
+}
+.nav-links-mobile {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 4rem;
+    right: 0;
+    background-color: black;
+    width: 40%;
+    text-align: right;
+    z-index: 200001;
+}
+.nav-links-mobile a {
+    padding-right: 1.1rem;
+    padding-bottom: 10px;
+}
 /* Responsive for Mobile */
 @media (max-width: 768px) {
     .navbar {
@@ -210,13 +247,19 @@ ul {
         gap: 10px;
     }
     .logo img {
-        height: 1.8rem;
+        height: 2.2rem;
         align-items: center;
     }
     .nav-title {
         font-size: 1.1rem;
         font-weight: bold;
         margin-bottom: 0.2rem;
+    }
+    .nav-links {
+        display: none;
+    }
+    .hamburger {
+        display: block;
     }
 }
 
@@ -236,7 +279,7 @@ ul {
     background: rgba(255, 255, 255, 1);
     box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
     padding: 20px;
-    z-index: 2001;
+    z-index: 5001;
     overflow-y: scroll;
 }
 #panel h1 {
@@ -255,10 +298,11 @@ ul {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 90%;
+    width: 70%;
     max-width: 300px;
     max-height: 45vh;
-    background: white;
+    color: white;
+    background: black;
     padding: 20px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
     overflow-y: scroll;
@@ -296,8 +340,8 @@ ul {
 
 #info-icon {
     position: fixed;
-    top: 95px;
-    right: 20px;
+    top: 5.4rem;
+    right: 1rem;
     color: black;
     cursor: pointer;
     font-size: 20px;
@@ -364,6 +408,18 @@ ul {
     margin-right: 5px;
     display: inline-block;
 }
+@media (max-width: 768px) {
+    #legend {
+        top: 4.5rem;
+        left: 0rem;
+    }
+    #legend p {
+        font-size: 0.7rem;
+    }
+    .legend-item {
+        font-size: 0.7rem;
+    }
+}
 /* Legend Info Icon Tooltip Container */
 .tooltip-container {
     position: relative;
@@ -427,6 +483,7 @@ ul {
 
 .popup-hover {
     background-color: rgba(255, 255, 255, 0.2);
+    z-index: 6000;
 }
 .popup-hover h1 {
     font-size: .7rem;
@@ -443,7 +500,6 @@ ul {
     width: 20px;
     height: 20px;
     color: black;
-    z-index: 6000;
 }
 
 /* Clicked */
@@ -452,6 +508,7 @@ ul {
     max-height: 300px;
     overflow-y: auto;
     overflow-x: none;
+    z-index: 6000;
 }
 .popup-clicked h1 {
     font-size: 1rem;            
@@ -515,4 +572,13 @@ ul {
     font-size: 0.7rem;
     width: 8.75rem;
     margin: 0px;
+}
+@media (max-width: 768px) {
+    #search-box {
+        top: 16.8rem;
+        left: 0rem;
+    }
+    #search-input {
+        width: 8rem;
+    }
 }

@@ -63,6 +63,42 @@
     
     <script src="https://unpkg.com/lucide@latest"></script>
     <script async src="https://www.instagram.com/embed.js"></script>
+
+    <!-- <style>
+        /* Add styles for the hamburger menu */
+        .hamburger {
+            display: none;
+            cursor: pointer;
+        }
+        .hamburger div {
+            width: 25px;
+            height: 3px;
+            background-color: white;
+            margin: 5px;
+        }
+        .nav-links-mobile {
+            display: none;
+            flex-direction: column;
+            position: absolute;
+            top: 2.6rem;
+            right: 0;
+            background-color: black;
+            width: 100%;
+            text-align: right;
+        }
+        .nav-links-mobile a {
+            padding: 10px;
+            border-bottom: 1px solid #498bf7;
+        }
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            .hamburger {
+                display: block;
+            }
+        }
+    </style> -->
 </head>
 
 <body>
@@ -77,9 +113,20 @@
             <a href="https://www.stears.co/open-data/about-us/">About us</a>
             <a href="https://mailchi.mp/stears.co/open-data"><button class="btn">Stay updated</button></a>
         </div>
+        <div class="hamburger" onclick="toggleMenu()">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <div class="nav-links-mobile" id="nav-links-mobile">
+            <a href="map.html">Map</a>
+            <a class="nav-a-current" href="details.html">Details</a>
+            <a href="https://www.stears.co/open-data/about-us/">About us</a>
+            <a href="https://mailchi.mp/stears.co/open-data"><button class="btn">Stay updated</button></a>
+        </div>
     </nav>
 
-    <a href="details.html#top"><button class="btn-back-to-top">↑ Jump to top of page</button></a>
+    <a id="hidden-top" href="details.html#top"><button class="btn-back-to-top">↑ Jump to top of page</button></a>
 
     <div class="container">
         <h1>Lagos Ferry Map: Background & Full Details</h1>
@@ -358,6 +405,10 @@
             });
         });
 
+        function toggleMenu() {
+            const navLinksMobile = document.getElementById("nav-links-mobile");
+            navLinksMobile.style.display = navLinksMobile.style.display === "flex" ? "none" : "flex";
+        }
     </script>
 </body>
 </html>

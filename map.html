@@ -63,6 +63,42 @@
     
     <script src="https://unpkg.com/lucide@latest"></script>
 
+    <!-- <style>
+        /* Add styles for the hamburger menu */
+        .hamburger {
+            display: none;
+            cursor: pointer;
+        }
+        .hamburger div {
+            width: 25px;
+            height: 3px;
+            background-color: white;
+            margin: 5px;
+        }
+        .nav-links-mobile {
+            display: none;
+            flex-direction: column;
+            position: absolute;
+            top: 2.6rem;
+            right: 0;
+            background-color: black;
+            width: 100%;
+            text-align: right;
+        }
+        .nav-links-mobile a {
+            padding: 10px;
+            border-bottom: 1px solid #498bf7;
+        }
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            .hamburger {
+                display: block;
+            }
+        }
+    </style> -->
+
 </head>
 
 <body>
@@ -73,6 +109,17 @@
             <div class="nav-title">Lagos Ferry Map</div>
         </div>
         <div class="nav-links">
+            <a class="nav-a-current" href="map.html">Map</a>
+            <a href="details.html">Details</a>
+            <a href="https://www.stears.co/open-data/about-us/">About us</a>
+            <a href="https://mailchi.mp/stears.co/open-data"><button class="btn">Stay updated</button></a>
+        </div>
+        <div class="hamburger" onclick="toggleMenu()">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <div class="nav-links-mobile" id="nav-links-mobile">
             <a class="nav-a-current" href="map.html">Map</a>
             <a href="details.html">Details</a>
             <a href="https://www.stears.co/open-data/about-us/">About us</a>
@@ -413,6 +460,11 @@
                     document.removeEventListener("click", closeTooltip);
                 }
             });
+        }
+
+        function toggleMenu() {
+            const navLinksMobile = document.getElementById("nav-links-mobile");
+            navLinksMobile.style.display = navLinksMobile.style.display === "flex" ? "none" : "flex";
         }
     </script>
 
