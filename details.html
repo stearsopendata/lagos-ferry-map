@@ -63,7 +63,13 @@
     
     <script src="https://unpkg.com/lucide@latest"></script>
     <script async src="https://www.instagram.com/embed.js"></script>
-</head>
+    <style>
+        .anchor-offset {
+            padding-top: 80px; /* Adjust based on the height of your navbar */
+            margin-top: -80px; /* Adjust based on the height of your navbar */
+        }
+    </style>
+    </head>
 
 <body>
     <nav class="navbar" id="top">
@@ -92,7 +98,7 @@
     <a id="hidden-top" href="details.html#top"><button class="btn-back-to-top">↑ Jump to top of page</button></a>
 
     <div class="container">
-        <h1>Lagos Ferry Map: Background & Full Details</h1>
+        <h1 class="anchor-offset" id="context">Lagos Ferry Map: Background & Full Details</h1>
         <div id="jump-to">
             <p><b>Sections:
                 <a href="details.html#safety">Safety & Oversight</a> •  
@@ -101,7 +107,7 @@
                 <a href="details.html#routes">Routes, Schedules, & Fares</a>
             </b></p>
         </div>
-        <h2 id="context">Motivation and context</h2>
+        <h2 class="anchor-offset" id="context">Motivation and context</h2>
         <p>[THIS IS WHOLE SECTION IS STILL PLACEHOLDER TEXT] In a city that is notorious for terrible road congestion, ferries are an underutilised and poorly understood transportation alternative. We want to educate Lagos commuters about water transit alternatives, hopefully enabling people to have faster, more enjoyable commutes. The problem is most ferries in Lagos are informally run by private operators, and therefore, they lack documentation and people only learn about them through word-of-mouth. That's why we deployed a team of data collection contractors to gather detailed information about the routes, schedules, and fares.</p>
         <p><b>Operators</b>: The Lagos State government funs a ferry service called Lagferry. However, most ferry routes are run by private, informal operators, similar to danfo busses. Until this project from <a href="https://www.stears.co/open-data/about-us/">Stears Open Data</a>, there has been no online documentation of all the routes, schedules, and fares.</p>
         <p><b>Facility quality</b>: Our map presents the full spectrum of ferry facilities and routes. The ferry facilities are color-coded based on their level of perceived safety and structural development. Pictures are also provided to help you imagine what it's like at each site. Some of the locations are quite informal and undeveloped, making them a better fit for commuters who are more adventurous and don't mind getting their shoes muddy.</p>
@@ -117,7 +123,7 @@
         </div>
 
     
-        <h2 id="safety">Government oversight and safety</h2>
+        <h2 class="anchor-offset" id="safety">Government oversight and safety</h2>
         <p>[THIS IS WHOLE SECTION IS STILL PLACEHOLDER TEXT] Several govenrment agencies are responsible for ensuring safety related to water transportation. LASWA, Lagferry, NIWA.... The rest will be filled in later. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce sed efficitur nibh. Ut venenatis ultrices enim, nec aliquam nibh vulputate eget. Nullam sit amet urna malesuada, elementum justo a, tincidunt odio. Mauris commodo egestas porttitor. Mauris venenatis leo quis nisl accumsan porta. Sed rutrum leo arcu, ut ullamcorper enim auctor in. Fusce est justo, ullamcorper eu efficitur nec, tincidunt id orci. Vestibulum elementum dapibus dui vehicula posuere.
         <p>Some safety stats will be inserted here. Duis ullamcorper tincidunt diam in condimentum. Duis placerat augue in felis ultrices, sed finibus sapien feugiat. Nulla non consequat felis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vitae nibh imperdiet, condimentum mauris ac, lacinia lectus. Aenean in tempus eros. Vestibulum sit amet urna non augue congue efficitur. Quisque non pulvinar sem. Cras felis nunc, aliquam et euismod eget, maximus at nulla. Sed eu leo lacus. Vivamus vel velit sed arcu cursus finibus vel at enim.</p>       
         <p><b>Explore our videos on this topic and interviews with frequent ferry users:</b></p>
@@ -130,7 +136,7 @@
         </div>
 
     
-        <h2 id="mapping">Data and mapping process</h2>
+        <h2 class="anchor-offset" id="mapping">Data and mapping process</h2>
         <p>This is the first-ever comprehensive map of private and public ferries in Lagos. It was produced through a combination of data extraction from online sources and field data collection. The scope is limited to the Lagos metropolitan area, rather than the entire state.</p>
         <p>We began by identifying all locations that could potentially have ferry activities. We did this by building off a <a href="https://lagoswaterways.com/terminals">list terminals, jetties, and landings from LASWA</a> (note: many of these locations are inactive or used for industrial/commercial purposes and therefore not open to the public). We then expanded the list by mining Google Maps and OpenStreetMap for all locations that had ferry-related keywords in their names. We hired a team of field data collection contractors to visit all the locations and determine if there is passenger ferry activity there. The field team interviewed operators at each location to document the routes that operate there and capture detailed information about the stops, schedules, and fares. They also rode the ferries and collected GPS logs, capturing the coordinates of the ferries' exact paths and stops. We then cleaned and compiled all this information into an <a href="map.html">interactive map</a> which is freely available to the public.</p>
         <p>Private, informal transit operations are always subject to change. This information was collected in <b>February 2025</b>. To stay up-to-date, we have included a user feedback feature where users can submit updates to the data.</p>
@@ -143,11 +149,11 @@
         </div>
 
     
-        <h2 id="facilities"><i class="section-icon" data-lucide="map-pin"></i> Ferry facilities: departure points and destinations</h2>
+        <h2 class="anchor-offset" id="facilities"><i class="section-icon" data-lucide="map-pin"></i> Ferry facilities: departure points and destinations</h2>
         <div id="jetties-list"></div>
 
     
-        <h2 id="routes"><i class="section-icon" data-lucide="ship"></i> Ferry routes: operators, schedules, and fares</h2>
+        <h2 class="anchor-offset" id="routes"><i class="section-icon" data-lucide="ship"></i> Ferry routes: operators, schedules, and fares</h2>
         <div id="routes-list"></div>
     
     </div>
@@ -212,7 +218,7 @@
 
                     let destinationsHTML = Object.entries(destinationsGroupedByLGA).map(([LGA, destinations]) => {
                         if (uniqueStopIds.length > 0) {
-                            return `<button class="accordion">${LGA} LGA Destination(s)<i class="accordion-icon" data-lucide="chevron-down"></i></button>
+                            return `<button class="accordion">${LGA} LGA</button>
                                 <div class="accordion-panel">
                                     <table>
                                         <tr>
@@ -238,15 +244,17 @@
                     const row = document.createElement("div");
                     row.innerHTML = `
                         <div class="featureCard" id="stop_${ferry_stop_id}">
-                            <h2>Ferry Facility: ${name}</h2>
+                            <p class="card_type_label">📍 Ferry Facility</p>
+                            <h2>${name}</h2>
                             ${imageCellContent}
                             <br>
                             <p><b>LGA</b>: ${LGA} • <b>Facility Quality</b>: ${quality} • <b>Facility Type</b>: ${type} • <b>Ownership</b>: ${ownership}</p>
                             <p>➤ <a href="${google_maps_url}" target="_blank">View on Google Maps</a></p>   
-                            <p>🚩 Is something incorrect? <a target="_blank" href=https://forms.clickup.com/37317836/f/13jv6c-26472/60ATY7Y1SD75AZX1D4?Name%20of%20map%20feature=StopID:${ferry_stop_id}--${name}>Send feedback</a>.</p>        
                             <h3>All possible destinations</h3>
                             ${charterStatus}
                             ${destinationsHTML}
+                            <br>
+                            <p>🚩 Is something incorrect about this location?</p><a target="_blank" href=https://forms.clickup.com/37317836/f/13jv6c-26472/60ATY7Y1SD75AZX1D4?Name%20of%20map%20feature=StopID:${ferry_stop_id}--${name}><button class="feedback_button">Send feedback</button></a>        
                         </div>
                     `;
                     
@@ -283,7 +291,7 @@
                             stopsBreakdownHTML = "";
                         }
 
-                        operatorHTML += `<button class="accordion">Lagferry<i class="accordion-icon" data-lucide="chevron-down"></i></button>
+                        operatorHTML += `<button class="accordion">Lagferry</button>
                             <div class="accordion-panel">
                                     <ul>
                                     <li><b>Operating Hours</b>: ${op.operating_hours}. ${op.peak_only}</li>
@@ -297,7 +305,7 @@
                                 </ul>
                             </div>`;
                     } else {
-                        operatorHTML += `<button class="accordion">Lagferry<i class="accordion-icon" data-lucide="chevron-down"></i></button>
+                        operatorHTML += `<button class="accordion">Lagferry</button>
                             <div class="accordion-panel"><ul><li>Lagferry does not operate along this route</li></ul></div>`;
                     }
 
@@ -312,7 +320,7 @@
                             stopsBreakdownHTML = "";
                         }
 
-                        operatorHTML += `<button class="accordion">Private Operators<i class="accordion-icon" data-lucide="chevron-down"></i></button>
+                        operatorHTML += `<button class="accordion">Private Operators</button>
                             <div class="accordion-panel">
                                     <ul>
                                     <li><b>Operating Hours</b>: ${op.operating_hours}. ${op.peak_only}</li>
@@ -326,20 +334,22 @@
                                 </ul>
                             </div>`;
                     } else {
-                        operatorHTML += `<button class="accordion">Private Operators<i class="accordion-icon" data-lucide="chevron-down"></i></button>
+                        operatorHTML += `<button class="accordion">Private Operators</button>
                             <div class="accordion-panel"><ul><li>None: Lagferry is the only operator along this route</li></ul></div>`;
                     }
 
                     const row = document.createElement("div");
                     row.innerHTML = `
                         <div class="featureCard" id="route_${route_id}">
-                            <h2>Ferry Route: <a href="details.html#route_${route_id}">${origin} ⇄ ${destination}</a></h2>
+                            <p class="card_type_label">⛴️ Ferry Route</p>
+                            <h2>${origin} ⇄ ${destination}</h2>
                             <p><b>Total trip duration</b>: ~${duration_to_final_destination}</p>
                             <p>${stopsHTML}</p>
-                            <p>🚩 Is something incorrect? <a target="_blank" href=https://forms.clickup.com/37317836/f/13jv6c-26472/60ATY7Y1SD75AZX1D4?Name%20of%20map%20feature=RouteID:${route_id}--${origin.replaceAll(" ","%20")} - ${destination.replaceAll(" ","%20")}>Send feedback</a>.</p>
                             <h3>Operator options</h3>
                             ${operatorHTML}
-                        </div>
+                            <br>
+                            <p>🚩 Is something incorrect about this route?</p><a target="_blank" href=https://forms.clickup.com/37317836/f/13jv6c-26472/60ATY7Y1SD75AZX1D4?Name%20of%20map%20feature=RouteID:${route_id}--${origin.replaceAll(" ","%20")} - ${destination.replaceAll(" ","%20")}><button class=feedback_button">Send feedback</button></a>
+                            </div>
                     `;
                     
                     routesTable.appendChild(row);
@@ -350,11 +360,21 @@
                 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
                 document.querySelectorAll(".accordion").forEach(button => {
+                    // Set initial state
+                    const accordionPanel = button.nextElementSibling;
+                    accordionPanel.style.display = "block";
+                    const icon = button.querySelector('i');
+                    icon.setAttribute('data-lucide', 'chevron-right');
+                    lucide.createIcons();
+
+                    // Add click handler
                     button.addEventListener("click", function() {
                         const accordionPanel = this.nextElementSibling;
                         const icon = this.querySelector('i');
-                        accordionPanel.style.display = accordionPanel.style.display === "block" ? "none" : "block";
-                        icon.setAttribute('data-lucide', accordionPanel.style.display === "block" ? 'chevron-up' : 'chevron-down');
+                        const isExpanded = accordionPanel.style.display === "block";
+                        
+                        accordionPanel.style.display = isExpanded ? "none" : "block";
+                        icon.setAttribute('data-lucide', isExpanded ? 'chevron-right' : 'chevron-down');
                         lucide.createIcons();
                     });
                 });
